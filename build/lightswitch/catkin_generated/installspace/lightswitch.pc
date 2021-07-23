@@ -1,0 +1,8 @@
+prefix=/home/pi/SST_HMI/rpi_ros/install
+
+Name: lightswitch
+Description: Description of lightswitch
+Version: 0.0.1
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: std_msgs

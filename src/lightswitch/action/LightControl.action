@@ -1,0 +1,8 @@
+# Define the goal
+int32 command
+---
+# Define the result
+string status
+---
+# Define the feedback
+int32 latency

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node pkg="lightswitch" type="lightswitch_node" name="lightswitch_node" output="screen">
+  <rosparam file = "$(find lightswitch)/config/params.yaml" command = "load" />
+  </node>
+</launch>

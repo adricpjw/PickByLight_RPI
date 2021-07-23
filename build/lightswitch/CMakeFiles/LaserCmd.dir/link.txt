@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -std=c++17 -pthread  -shared -Wl,-soname,libLaserCmd.so -o /home/pi/SST_HMI/rpi_ros/devel/lib/libLaserCmd.so CMakeFiles/LaserCmd.dir/lib/LaserCmd.cpp.o  -lwiringPi 
