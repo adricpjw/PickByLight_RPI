@@ -1,8 +1,0 @@
-prefix=/home/pi/SST_HMI/rpi_ros/devel
-
-Name: lightswitch
-Description: Description of lightswitch
-Version: 0.0.1
-Cflags: -I/home/pi/SST_HMI/rpi_ros/devel/include
-Libs: -L${prefix}/lib 
-Requires: std_msgs
