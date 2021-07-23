@@ -2,8 +2,6 @@
 
 LightSwitch::LightSwitch()
     : nh_(), private_nh_("~"), laserCmd_()
-// action_server_(nh_, "lightcmd",
-//                boost::bind(&LightSwitch::lightcmdCB, this, _1), false)
 {
   private_nh_.param<std::vector<int>>("gpio_pins", gpio_pins_, {});
   private_nh_.param<double>("timerRate", timerRate_, 5);
@@ -21,8 +19,6 @@ LightSwitch::LightSwitch()
   for (auto i : gpio_pins_)
     std::cout << i << ", ";
   std::cout << std::endl;
-  // action_server_.start();
-  // ROS_INFO("Action Server up");
 }
 
 LightSwitch::~LightSwitch() {
@@ -40,11 +36,6 @@ void LightSwitch::lightcmdCB(const std_msgs::Int32::ConstPtr &msg) {
     int state = msg->data & (1 << i);
     laserCmd_.setPin(gpio_pins_[i], state);
   }
-
-  // result_.status = "Success";
-  // feedback_.latency = 5;
-  // action_server_.publishFeedback(feedback_);
-  // action_server_.setSucceeded(result_);
 }
 
 void LightSwitch::timerCB(const ros::TimerEvent &) {

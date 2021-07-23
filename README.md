@@ -22,6 +22,7 @@
 
 ## Installation
 
+- Make sure [ROS Kinetic](http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Kinetic%20on%20the%20Raspberry%20Pi) is installed on your RPI. 
 - Clone this repo to your local machine using `https://github.com/adricpjw/PickByLight_RPI`
 - Make sure this is in your catkin workspace
 
@@ -33,104 +34,63 @@
 $ cd ~/catkin_ws && catkin_make
 ```
 
-### Dependant Packages
-
-#### niryo_one_ros
-```shell
-$ git clone https://github.com/zakimohzani/niryo_one_ros
-$ git checkout FinalCameraLightsIntegration
-```
-
 ---
 ## Usage
 
 ### Adjusting the mission sequence
-Before launching the PickByLight launch, ensure that the configurations and parameters are in order by navigating to `/config/params.yaml`
+Before launching the PickByLight_RPI launch, ensure that the configurations and parameters are in order by navigating to `/config/params.yaml`
 ```yaml
 ---
-  lightcmd_topic: /lightcmd
-  objDetected_sub_topic: /activeObjects
-  lightarray_frame: light_array
-  origin_frame: base_link
-  num_lights: 10 # the number of lights mounted
-  timer_rate: 5 # Hz
-  y_tolerance : 0.10 # Distance from object the belt-axis to turn on light (in meters)
-  array_width : 0.44 # Length of laser diodes from end to end (in meters)
+  gpio_pins:
+    - 4
+    - 17
+    - 18
+    - 27
+    - 22
+    - 23
+    - 24
+    - 12
+    - 6
+    - 5
+    - 11
+    - 9
+    - 10
+    - 25
+    - 13
+    - 19
+    - 16
+    - 26
+    - 20
+    - 21
 
-  #---- FILTERS ---- #
-  FIL_BY_X : true
-  FIL_BY_Y : true
-  FIL_BY_TYPE : false
-  
+  timerRate : 5
 
 ```
-
-Another config file (`/config/lightarray.yaml`) is also important in determining the position of light array.
-```yaml
----
-  x_pos: 0.50
-  y_pos: -0.20
-  z_pos: 0.37
-  # roll: -45
-  roll: 45
-
-  frame_id: light_array
-  origin_frame: base_link
-  timer_rate: 5
-  
-```
+These are the GPIO pins in order that is used from left to right. Adjust as necessary for which lights to turn on.
 
 ### Launch the node
 You can now load the mission by running:
 ```shell
-$ roslaunch hmiCmd hmiCmd.launch
+$ roslaunch lightswitch lightswitch.launch
 ```
-
 
 ---
 ## Documentation 
 
-### Filters:
+### Message type
 
-Currently there are three implemented types of filters: 
+Currently the message structure for light command is the standard [32 bit Integer msg](http://docs.ros.org/en/api/std_msgs/html/msg/Int32.html)
 
-> Filter by X
-This is the most important filter as it is currently directly tied to the command sent to lights. Without it enabled the nothing will be published to `/lightcmd`
-It determines which light index should be switch to HIGH by checking the x pose and width of each active object.
-```cpp
-void filterbyX(vpsi &frames) {
-    /* Obtaining Frame Transforms */
+Each bit of the integer determines the HIGH/LOW state of each laser diode.
 
-    // For each object, obtain its x pose and width 
-    double x = transformStamped_.transform.translation.x;
-    double width = frame.boundingBox[3];
+For example : 
 
-    // Determine which lights to turn on to cover the entire width of the object
-    
-    int lower_idx = (x - width / 2) < lower_x_
-                        ? 0
-                        : ((x - width / 2 - lower_x_) / diode_coverage_);
-    int upper_idx = (x + width / 2) < lower_x_
-                        ? 0
-                        : ((x + width / 2 - lower_x_) / diode_coverage_);
-}
+Int32 msg data: 45
 
-```
+Bit Equivalent: 0b101101
 
-> Filter by Y
-This filter determines whether lights should turn on by checking if the object is within a certain distance from where the lights are shining along the belt-axis.
+Laser Diode states: HIGH LOW HIGH HIGH LOW HIGH
 
-```cpp
-void hmiCtrl::filterbyY(vecWaste &frames) {
-    if (fabs(transformStamped_.transform.translation.y - y_boundary_) >
-        (y_tolerance_ + length / 2)) {
-        //ignore the frame by lazy deletion
-    }
-}
-```
-
-> Filter by Type
-This filter determines if the active Object should be ignored based from its plastic type, beit HDPE OR PET
 
 
 ---

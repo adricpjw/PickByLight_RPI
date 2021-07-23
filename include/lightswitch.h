@@ -7,8 +7,6 @@
 #include <iostream>
 
 class LightSwitch {
-  // typedef actionlib::SimpleActionServer<lightswitch::LightControlAction>
-  //     LightSwitchServer;
 
 public:
   LightSwitch();
