@@ -7,7 +7,7 @@
 
 [![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger) 
 
-- Tested and ran on a Raspberry Pi 4B
+- Tested and ran on a Raspberry Pi 4B, Raspbian Buster, ROS Kinetic
 
 ---
 
@@ -22,7 +22,7 @@
 
 ## Installation
 
-- Clone this repo to your local machine using `https://github.com/adricpjw/PickByLight`
+- Clone this repo to your local machine using `https://github.com/adricpjw/PickByLight_RPI`
 - Make sure this is in your catkin workspace
 
 ### Setup

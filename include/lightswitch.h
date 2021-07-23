@@ -1,8 +1,6 @@
 #pragma once
 
 #include "LaserCmd.h"
-// #include <actionlib/server/simple_action_server.h>
-#include <lightswitch/LightControlAction.h>
 #include <queue>
 #include <ros/ros.h>
 #include <std_msgs/Int32.h>
@@ -21,9 +19,6 @@ private:
   ros::Subscriber lightswitch_sub_;
   ros::Publisher lightcmd_hearthbeat_;
   ros::Timer timer_;
-  // LightSwitchServer action_server_;
-  // lightswitch::LightControlFeedback feedback_;
-  // lightswitch::LightControlResult result_;
   void lightcmdCB(const std_msgs::Int32::ConstPtr &msg);
   void timerCB(const ros::TimerEvent &);
 

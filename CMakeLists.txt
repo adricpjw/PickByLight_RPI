@@ -6,8 +6,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   genmsg
-  actionlib
-  actionlib_msgs
 )
 
 add_action_files(DIRECTORY action FILES 
